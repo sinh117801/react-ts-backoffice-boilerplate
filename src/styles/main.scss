@@ -1,1 +1,20 @@
-@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootstrap/scss/bootstrap.scss";
+
+// $utilities: map-merge(
+//   $utilities,
+//   (
+//     "width":
+//       map-merge(
+//         map-get($utilities, "width"),
+//         (
+//           values:
+//             map-merge(
+//               map-get(map-get($utilities, "width"), "values"),
+//               (
+//                 30: 30%,
+//               )
+//             ),
+//         )
+//       ),
+//   )
+// );
