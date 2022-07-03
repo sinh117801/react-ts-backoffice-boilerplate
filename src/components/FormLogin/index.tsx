@@ -1,27 +1,47 @@
-import { lazy } from 'react';
-import { Form } from 'react-bootstrap';
-import { DefaultValues, useForm } from 'react-hook-form';
+import { Button, Form } from "react-bootstrap";
+import { DefaultValues, Resolver, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-const InputText = lazy(() => import('components/share/InputText'));
+import InputText from "components/share/InputText";
 
-type TFormLogin = {
-  email: string;
-  password : string;
-}
+const schemaFormLogin = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
+type TFormLogin = z.infer<typeof schemaFormLogin>;
 
 export default function FormLogin() {
-  const defaultValues: DefaultValues<TFormLogin>= {
-    email: '',
-    password: ''
+  const defaultValues: DefaultValues<TFormLogin> = {
+    email: "",
+    password: "",
   };
 
-  const { control } = useForm<TFormLogin>({
-    defaultValues
+  const resolver: Resolver<TFormLogin> = zodResolver(schemaFormLogin);
+
+  const { control, handleSubmit } = useForm<TFormLogin>({
+    defaultValues,
+    resolver,
   });
 
+  function handleSubmitForm(value: TFormLogin) {
+    console.log({ value });
+  }
+
   return (
-    <Form>
-      <InputText id="email" control={control} name="email" />
+    <Form onSubmit={handleSubmit(handleSubmitForm)} noValidate>
+      <InputText id="email" control={control} name="email" label="Email" />
+      <InputText
+        id="password"
+        control={control}
+        name="password"
+        label="Password"
+        formControlProps={{ type: "password" }}
+      />
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
     </Form>
   );
 }
