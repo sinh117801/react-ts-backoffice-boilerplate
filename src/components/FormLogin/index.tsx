@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { DefaultValues, useForm } from 'react-hook-form';
 
 const InputText = lazy(() => import('components/share/InputText'));
 
@@ -10,11 +10,13 @@ type TFormLogin = {
 }
 
 export default function FormLogin() {
+  const defaultValues: DefaultValues<TFormLogin>= {
+    email: '',
+    password: ''
+  };
+
   const { control } = useForm<TFormLogin>({
-    defaultValues: {
-      email: '',
-      password: ''
-    }
+    defaultValues
   });
 
   return (

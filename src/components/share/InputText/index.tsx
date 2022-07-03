@@ -1,21 +1,28 @@
 import { Form, FormControlProps } from "react-bootstrap";
 import {
+  FieldPath,
   FieldValues,
   useController,
   UseControllerProps,
 } from "react-hook-form";
 
-type Props<T extends FieldValues> = {
+type Props<
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+> = {
   id: string;
   formControlProps?: FormControlProps;
-} & UseControllerProps<T>;
+} & UseControllerProps<TFieldValues, TName>;
 
-export default function InputText<T extends FieldValues>(props: Props<T>) {
+export default function InputText<
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+>(props: Props<TFieldValues, TName>) {
   const { id, formControlProps, control, name } = props;
   const {
     field,
     fieldState: { error },
-  } = useController<T>({ control, name });
+  } = useController({ control, name });
 
   return (
     <Form.Group className="mb-3" controlId={id}>
